@@ -1,0 +1,462 @@
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #444;
+    color: white;
+    overflow: hidden;
+    user-select: none;
+}
+
+#hidden {
+    display: none;
+}
+
+#container {
+    position: relative;
+    top: 2.5vw;
+    /* controlled by .display-flex and .display-none */
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    background-color: #444;
+    color: white;
+    overflow: hidden;
+}
+
+button {
+    font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    width: auto;
+    min-width: 7em;
+    font-size: 1.2vw;
+    height: 2em;
+    background-color: #EEE;
+    text-align: center;
+    padding-left: .5vw;
+    padding-right: .5vw;
+    margin: .2vw;
+}
+
+select {
+    height: 2em;
+    font-size: 1.2vw;
+    margin: .2vw;
+}
+
+#session-info {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 0;
+    background-color: #333;
+    color: white;
+    padding: 1vw;
+    padding-top: 2vw;
+    font-size: 2vw;
+    position: absolute;
+    z-index: 10;
+}
+
+#list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: top;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    color: #333;
+    padding: 1vw;
+    font-size: 1.5vw;
+    position: absolute;
+    z-index: 0;
+}
+
+#list-title {
+    font-weight: bold;
+    padding-left: 1vw;
+    padding-top: 1vw;
+    display: block;
+}
+
+#track-list {
+    text-align: left;
+    color: black;
+    padding-top: 1vw;
+}
+
+.track-item {
+    padding-left: 5px;
+    background-color: #EEE;
+}
+
+.track-ready {
+    border-left: 15px solid lime;
+    font-weight: bold;
+}
+
+#session-info a {
+    color: white;
+    font-weight: bold;
+}
+
+#session-title {
+    
+}
+
+#session-name {
+    font-weight: bold;
+    color:lime;
+}
+
+#qrcode-wrapper {
+    height: 45vh;
+    width: 45vh;
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+#qrcode {
+    height: 45vh;
+    width: 45vh;
+    display: block;
+    margin: 0;
+}
+
+.session-info {
+    margin: 1vw;
+}
+
+#copy {
+    display: block;
+    width: 12em;
+}
+
+#url-copy {
+    display: none;
+}
+
+#intro {
+    display: block;
+}
+
+#track-header {
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#channel {
+    width: 100%;
+    height: 100px;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.name-header, .track-name-td {
+    margin: 0;
+    font-size: 3vw;
+    font-weight: 100;
+}
+
+.initials-td {
+    border: .2em solid transparent;
+}
+
+.name-header, .step-header {
+    font-size: 2vw;
+    font-weight: 100;
+}
+
+.track-name-td {
+    color: black;
+    padding: 0;
+}
+
+tr.track, tr.track-header-tr {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+tr.track {
+    background-color: #AAA;
+    padding: 0;
+}
+
+tr.synth-track {
+    color: white;
+}
+
+.name-header, .step-header, .step-td, .track-name-td, .track-icon-td {
+    color: white;
+    text-align: center;
+    width: 4vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.track-name-td {
+    color: black;
+    padding-right: 1vw;
+}
+
+.step-td {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Faders: */
+
+.fader {
+    display: none;
+    margin: 8vw;
+    width: 16vw;
+    padding: 0;
+    transform: rotate(270deg);
+    background-color: white;
+}
+
+@media screen and (orientation:portrait) {
+    .fader {
+        margin: 16vw;
+        width: 32vw;
+    }
+}
+
+#big-instrument-icon {
+    width: 7vw;
+}
+
+#big-initials {
+    font-size: 6vw;
+    margin-left: 1vw;
+}
+
+#controls {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+    height: 2.5vw;
+    z-index: 20;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+#buttons:hover .hover-show {
+    visibility: visible;
+}
+
+.hover-show {
+    visibility: hidden;
+}
+
+#info-switch {
+    width: 3em;
+}
+
+button:active {
+    background-color: black;
+    color: white;
+    /*
+    margin-top: 1px;
+    margin-bottom: -1px;
+    */
+}
+
+button.controls:hover {
+    background-color: black;
+    color: white;
+}
+
+.cursor {
+    background-color: #444;
+}
+
+.playing {
+    background-color: lime;
+}
+
+.paused {
+    background-color: red;
+}
+
+#play, #stop {
+    height: 1.3em;
+    width: 1.3em;
+    padding-top: 0em;
+}
+
+.hidden {
+    display: none;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.display-none {
+    display: none;
+}
+
+#ext-clock-indicator, #ext-tempo-indicator {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+/* Conductor */
+
+#conductor {
+    
+}
+
+#mixer {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #AAA;
+}
+
+.strip-cell  {
+    background-color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: .5vw;
+    margin: .5vw;
+    border-radius: 0.3vw;
+}
+
+.mix-fader-rail {
+    height: 16vw;
+    border: 0;
+    margin: 0;
+}
+
+.mute, .solo {
+    border: 0;
+    margin: 0;
+}
+
+.mix-fader-cap, .mixSw {
+    text-align: center;
+    width: 2vw;
+    height: 2vw;
+    line-height: 2vw;
+    font-size: 1.2vw;
+    border-radius: 0.3vw;
+    background-color: #666;
+    margin: 0;
+}
+
+.mixSw {
+    background-color: white;
+    color: #666;
+    text-align: center;
+}
+
+.mute-on {
+    background-color: darkorange;
+    color: white;
+}
+
+.solo-on {
+    background-color: tomato;
+    color: white;
+}
+
+.color-button {
+    color: black;
+    width: 3.5vw;
+    height: 3.5vw;
+    margin: .2vw;
+    text-align: center;
+    line-height: 1em;
+    font-size: 2em;
+}
+/*
+#color-black    { background-color: black; color: white;}
+#color-white    { background-color: white; }
+#color-red      { background-color: red; }
+#color-green    { background-color: green; }
+#color-blue     { background-color: blue; }
+#color-cyan     { background-color: cyan; }
+#color-magenta  { background-color: magenta; }
+#color-yellow   { background-color: yellow; }
+*/
+
+
+
+/* ------------ Grid ------------ */
+
+#grid-container {
+    /* controlled by .display-flex and .display-none */
+    /* display: flex; */
+    position: relative;
+    z-index: 2;
+}
+
+#grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    margin: auto;
+    background-color: black;
+}
+.grid-item {
+    /*flex: 0 0 21%;*/
+    /* flex-grow, flex-shrink and flex-basis */
+    flex-grow: 1;
+    flex-basis: 11%;
+
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: .5em solid black;
+}
