@@ -30,7 +30,7 @@ if(!initials && session) { // No initials == no socket connection
 } else if(initials && session) {
     setCookie("countmein-initials",initials,1000);
     /* ----------- Socket set up: ------------ */
-    document.getElementById("controller").style.display = "block";
+    document.getElementById("controller").style.display = "flex";
     var mySocketID;
     var socket = io("", {query:{initials: initials, session: session}});
     socket.on("connect", () => {

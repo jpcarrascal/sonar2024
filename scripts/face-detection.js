@@ -13,11 +13,15 @@ const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 const demosSection = document.getElementById("demos");
 const imageBlendShapes = document.getElementById("image-blend-shapes");
 const videoBlendShapes = document.getElementById("video-blend-shapes");
+const emoticon = document.getElementById("emoticon");
 let faceLandmarker;
 let runningMode = "IMAGE";
-let enableWebcamButton;
+let enableWebcamButton, waitMessage, instructions;
 let webcamRunning = false;
 const videoWidth = 480;
+
+var debug = true;
+
 // Before we can use HandLandmarker class we must wait for it to finish
 // loading. Machine Learning models can be large and take a moment to
 // get everything needed to run.
@@ -32,7 +36,6 @@ async function createFaceLandmarker() {
         runningMode,
         numFaces: 1
     });
-    demosSection.classList.remove("invisible");
 }
 createFaceLandmarker();
 
@@ -50,6 +53,8 @@ function hasGetUserMedia() {
 // wants to activate it.
 if (hasGetUserMedia()) {
     enableWebcamButton = document.getElementById("webcamButton");
+    waitMessage = document.getElementById("wait-for-webcam");
+    instructions = document.getElementById("instructions");
     enableWebcamButton.addEventListener("click", enableCam);
 }
 else {
@@ -57,17 +62,20 @@ else {
 }
 // Enable the live webcam view and start detection.
 function enableCam(event) {
+    waitMessage.innerHTML = "Accessing camera, please wait...";
+    instructions.style.display = "none";
+    enableWebcamButton.style.display = "none";
     if (!faceLandmarker) {
         console.log("Wait! faceLandmarker not loaded yet.");
         return;
     }
     if (webcamRunning === true) {
         webcamRunning = false;
-        enableWebcamButton.innerText = "ENABLE PREDICTIONS";
+        enableWebcamButton.innerText = "ENABLE WEBCAM";
     }
     else {
         webcamRunning = true;
-        enableWebcamButton.innerText = "DISABLE PREDICTIONS";
+        enableWebcamButton.innerText = "DISABLE WEBCAM";
     }
     // getUsermedia parameters.
     const constraints = {
@@ -77,6 +85,8 @@ function enableCam(event) {
     navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
         video.srcObject = stream;
         video.addEventListener("loadeddata", predictWebcam);
+        document.getElementById("wait-for-webcam").innerHTML = "";
+        emoticon.style.display = "block";
     });
 }
 let lastVideoTime = -1;
@@ -100,17 +110,19 @@ async function predictWebcam() {
         lastVideoTime = video.currentTime;
         results = faceLandmarker.detectForVideo(video, startTimeMs);
     }
-    if (results.faceLandmarks) {
-        for (const landmarks of results.faceLandmarks) {
-            drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_TESSELATION, { color: "#C0C0C070", lineWidth: 1 });
-            drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_EYE, { color: "#FF3030" });
-            drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_EYEBROW, { color: "#FF3030" });
-            drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_EYE, { color: "#30FF30" });
-            drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_EYEBROW, { color: "#30FF30" });
-            drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_FACE_OVAL, { color: "#E0E0E0" });
-            drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LIPS, { color: "#E0E0E0" });
-            drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_IRIS, { color: "#FF3030" });
-            drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_IRIS, { color: "#30FF30" });
+    if(debug) {
+        if (results.faceLandmarks) {
+            for (const landmarks of results.faceLandmarks) {
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_TESSELATION, { color: "#C0C0C070", lineWidth: 1 });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_EYE, { color: "#FF3030" });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_EYEBROW, { color: "#FF3030" });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_EYE, { color: "#30FF30" });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_EYEBROW, { color: "#30FF30" });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_FACE_OVAL, { color: "#E0E0E0" });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LIPS, { color: "#E0E0E0" });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_RIGHT_IRIS, { color: "#FF3030" });
+                drawingUtils.drawConnectors(landmarks, FaceLandmarker.FACE_LANDMARKS_LEFT_IRIS, { color: "#30FF30" });
+            }
         }
     }
     drawBlendShapes(videoBlendShapes, results.faceBlendshapes);
@@ -127,29 +139,44 @@ function drawBlendShapes(el, blendShapes) {
     let htmlMaker = "";
     blendShapes[0].categories.map((shape) => {
         var note;
+        var tag;
+        var char;
         if (shape.categoryName === "eyeBlinkLeft" || shape.categoryName === "eyeBlinkRight" || shape.categoryName === "jawOpen") {
+            [note, tag, char] = faceClassifier(shape);
+            document.getElementById(tag).innerHTML = char;
             if(shape.score > 0.5) {
-                console.log(shape.categoryName);
-                switch (shape.categoryName) {
-                    case "eyeBlinkLeft":
-                        note = 60;
-                        break;
-                    case "eyeBlinkRight":
-                        note = 61;
-                        break;
-                    case "jawOpen":
-                        note = 62;
-                        break;
-                }
                 socket.emit("midi message", {source: "ui", message: [ NOTE_ON+midiChannel, note, 127], socketID: mySocketID, feature: shape.categoryName});
+            } else {
+                socket.emit("midi message", {source: "ui", message: [ NOTE_OFF+midiChannel, note, 0], socketID: mySocketID, feature: shape.categoryName});
             }
         }
-        htmlMaker += `
-      <li class="blend-shapes-item">
-        <span class="blend-shapes-label">${shape.displayName || shape.categoryName}</span>
-        <span class="blend-shapes-value" style="width: calc(${+shape.score * 100}% - 120px)">${(+shape.score).toFixed(4)}</span>
-      </li>
-    `;
     });
     //el.innerHTML = htmlMaker;
+}
+
+
+function faceClassifier(shape) {
+    var note;
+    var tag;
+    var char;
+    switch (shape.categoryName) {
+        case "eyeBlinkLeft":
+            note = 60;
+            tag = "left-eye";
+            char = (shape.score > 0.5)?"-":"·";
+            break;
+        case "eyeBlinkRight":
+            note = 61;
+            tag = "right-eye";
+            char = (shape.score > 0.5)?"-":"·";
+            break;
+        case "jawOpen":
+            note = 62;
+            tag = "mouth"
+            char = (shape.score > 0.5)?"D":")";
+            break;
+    }
+    var result = [note, tag, char];
+    console.log(result);
+    return result;
 }

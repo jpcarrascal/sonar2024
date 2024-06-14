@@ -25,6 +25,7 @@ body {
     align-items: center;
     justify-content: center;
     touch-action: manipulation;
+    font-size: 2em;
 }
 
 
@@ -69,7 +70,38 @@ body {
     display: none;
 }
 
-#rotate-me {
+button {
+  font-size: 1em;
+}
+
+#emoticon {
+  display: none;
+  font-size: 2em;
+  height: 1em;
+}
+
+#left-eye {
+  text-align: left;
+  font-size: 2em;
+  height: 1em;
+}
+
+#right-eye {
+  text-align: right;
+  font-size: 2em;
+}
+
+#mouth {
+  transform: rotate(90deg);
+}
+
+#controller {
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+}
+
+#instructions {
   text-align: center;
 }
 
@@ -89,23 +121,7 @@ body {
     justify-content: center;
 }
 
-@media screen and (orientation:portrait) {
-  #keyboard {
-    display: none;
-  }
-  #rotate-me {
-    display: block;
-  }
-}
 
-@media screen and (orientation:landscape) {
-  #keyboard {
-    display: flex;
-  }
-  #rotate-me {
-    display: none;
-  }
-}
 
 .full-screen {
     padding: 1em;
@@ -203,3 +219,11 @@ body {
   .active-key {
     background-color: lime;
   }
+
+
+
+
+  #video-container {
+    display: none;
+  }
+  

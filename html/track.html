@@ -31,25 +31,36 @@
     </div>
 
     <div id="controller" class="full-screen">
-  <section id="demos" class="invisible">
 
-    <h2>Demo: Webcam continuous face landmarks detection</h2>
-    <p>Hold your face in front of your webcam to get real-time face landmarker detection.</br>Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
-
-    <div id="liveView" class="videoView">
-      <button id="webcamButton" class="mdc-button mdc-button--raised">
-        <span class="mdc-button__ripple"></span>
-        <span class="mdc-button__label">ENABLE WEBCAM</span>
-      </button>
-      <div style="position: relative;">
-        <video id="webcam" style="position: abso" autoplay playsinline></video>
-        <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+      <div id="emoticon">
+        <table>
+          <tr>
+            <td id="left-eye">·</td>
+            <td id="right-eye">·</td>
+          </tr>
+            <tr>
+              <td colspan="2" id="mouth">)</td>
+            </tr>
+          </table>
       </div>
-    </div>
-    <div class="blend-shapes">
-      <ul class="blend-shapes-list" id="video-blend-shapes"></ul>
-    </div>
-  </section>
+
+        <p id="instructions">Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
+
+        <div id="liveView" class="videoView">
+          <span id="wait-for-webcam"></span><br />
+          <button id="webcamButton" class="mdc-button mdc-button--raised">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label button">ENABLE WEBCAM</span>
+          </button>
+          <div style="position: relative;" id="video-container">
+            <video id="webcam" style="position: abso" autoplay playsinline></video>
+            <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
+          </div>
+        </div>
+        <div class="blend-shapes">
+          <ul class="blend-shapes-list" id="video-blend-shapes"></ul>
+        </div>
+
     </div>
 
     
@@ -57,7 +68,6 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="scripts/config.js"></script>
     <script src="scripts/include.js"></script>
-    <script src="scripts/webaudio-tinysynth.js"></script>
     <script src="scripts/midi.js"></script>
     <script src="scripts/track.js"></script>
     <script type="module" src="scripts/face-detection.js"></script>
