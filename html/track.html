@@ -7,7 +7,6 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LCC0RPQNKH"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -32,74 +31,25 @@
     </div>
 
     <div id="controller" class="full-screen">
-      <div id="rotate-me">
-        <!-- <span id="counterclockwise">↺</span> -->
-        <img src="images/rotatephone.gif" id="rotate" />
-        <br/>
-        Ponme horizontal
+  <section id="demos" class="invisible">
+
+    <h2>Demo: Webcam continuous face landmarks detection</h2>
+    <p>Hold your face in front of your webcam to get real-time face landmarker detection.</br>Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
+
+    <div id="liveView" class="videoView">
+      <button id="webcamButton" class="mdc-button mdc-button--raised">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__label">ENABLE WEBCAM</span>
+      </button>
+      <div style="position: relative;">
+        <video id="webcam" style="position: abso" autoplay playsinline></video>
+        <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
       </div>
-      <!-- <webaudio-keyboard id="keyboard" min="48" keys="16" width="600" height="250" style="height: 100px;"></webaudio-keyboard>
-      -->
-      <div id="keyboard">
-        <div>
-          
-          <select id="select-midi-in" class="select-midi-in">
-            <option value="-1">Screen keyboard</option>
-          </select>
-
-
-          <span id="select-midi-channel-label">Channel:</span>
-          <select id="select-midi-channel">
-            <option value="-1" disabled="disabled">Keep/All</option>
-            <option value="0">1</option>
-            <option value="1">2</option>
-            <option value="2">3</option>
-            <option value="3">4</option>
-            <option value="4">5</option>
-            <option value="5">6</option>
-            <option value="6">7</option>
-            <option value="7">8</option>
-            <option value="8">9</option>
-            <option value="9">10</option>
-            <option value="10">11</option>
-            <option value="11">12</option>
-            <option value="12">13</option>
-            <option value="13">14</option>
-            <option value="14">15</option>
-            <option value="15">16</option>
-          </select>
-
-          
-          <span id="select-program-label">Program Change: </span>
-          <select id="select-program" disabled>
-            <option value="-1">MIDI</option>
-          </select>
-        </div>
-        <ul class="set display-keys" id="keys">
-          <li class="oct down" id="oct-down">◀</li>
-          <li class="key white e"  note="0" octave="5"></li>
-          <li class="key black ds" note="1" octave="5"></li>
-          <li class="key white d"  note="2" octave="5"></li>
-          <li class="key black cs" note="3" octave="5"></li>
-          <li class="key white c"  note="4" octave="5"></li>
-          <li class="key white b"  note="5" octave="5"></li>
-          <li class="key black as" note="6" octave="5"></li>
-          <li class="key white a"  note="7" octave="5"></li>
-          <li class="key black gs" note="8" octave="5"></li>
-          <li class="key white g"  note="9" octave="5"></li>
-          <li class="key black fs" note="10" octave="5"></li>
-          <li class="key white f"  note="11" octave="5"></li>
-          <li class="key white e"  note="12" octave="5"></li>
-          <li class="key black ds" note="13" octave="5"></li>
-          <li class="key white d"  note="14" octave="5"></li>
-          <li class="key black cs" note="15" octave="5"></li>
-          <li class="key white c"  note="16" octave="5"></li>
-          <li class="oct up" id="oct-up">▶</li>
-        </ul>
-      </div>
-      <div id="drums">
-
-      </div>
+    </div>
+    <div class="blend-shapes">
+      <ul class="blend-shapes-list" id="video-blend-shapes"></ul>
+    </div>
+  </section>
     </div>
 
     
@@ -107,10 +57,11 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="scripts/config.js"></script>
     <script src="scripts/include.js"></script>
-    <!-- <script src="scripts/webaudio-controls.js"></script> -->
     <script src="scripts/webaudio-tinysynth.js"></script>
     <script src="scripts/midi.js"></script>
     <script src="scripts/track.js"></script>
+    <script type="module" src="scripts/face-detection.js"></script>
 
   </body>
 </html>
+

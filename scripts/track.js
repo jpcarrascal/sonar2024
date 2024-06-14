@@ -14,13 +14,6 @@ if(initials === null || initials === "undefined" || initials === "") {
 setCookie("retries", 0, 1000);
 var retries = 0;
 var maxRetries = 3;
-var progSelect = document.getElementById("select-program");
-progSelect.innerHTML = Array.from({ length: 128 }, (_, i) => `<option value="${i}">${i}</option>`).join('\n  ');
-var progSelectLabel = document.getElementById("select-program-label");
-var midiInSelect = document.getElementById("select-midi-in");
-var midiInCurrent = -1;
-var midiChannelSelect = document.getElementById("select-midi-channel");
-var keys = document.getElementById("keys");
 
 if(!initials && session) { // No initials == no socket connection
     document.getElementById("initials-form").style.display = "block";
@@ -44,13 +37,7 @@ if(!initials && session) { // No initials == no socket connection
         setCookie("retries", 0, 1000); retries = 0;
         console.log("Connected, my socketID:" + socket.id);
         mySocketID = socket.id;
-        // Switch to a random instrument
-        //progSelect.value = progSelect.options[Math.floor(Math.random() * progSelect.options.length)].value;
-        progSelect.value = 0;
-        setTimeout(() => {
-            progSelect.disabled = false;
-            progSelect.dispatchEvent(new Event("change"));
-        }, 500);
+
     });
     var body = document.querySelector("body");
     var noSleep = new NoSleep();
@@ -61,7 +48,6 @@ if(!initials && session) { // No initials == no socket connection
         if(msg.socketID == mySocketID) {
             console.log("My channel is: " + msg.channel);
             midiChannel = msg.channel;
-            document.getElementById("select-midi-channel").value = midiChannel;
             console.log("My color is: " + msg.colors[0]);
             document.querySelector("body").style.backgroundColor = msg.colors[0];
             document.querySelector("body").style.color = msg.colors[1];
@@ -158,40 +144,7 @@ if(!initials && session) { // No initials == no socket connection
 
     });
 
-    progSelect.addEventListener("change", function(e) {
-        var program = parseInt(this.value);
-        socket.emit("midi message", {source: "ui", message: [P_CHANGE + midiChannel, program, 0], socketID: mySocketID});
-    });
 
-    midiInSelect.addEventListener("change", function(e) {
-        var index = parseInt(this.value);
-        if(index != -1) {
-            document.querySelectorAll(".display-keys").forEach(function(elem) {
-                elem.style.visibility = "hidden";
-            });
-            if(midiInCurrent != -1) midiIns[midiInCurrent].onmidimessage = null;
-            midiIns[index].onmidimessage = midiInToSocket;
-            document.querySelector("#select-midi-channel").options[0].disabled = false;
-            document.querySelector("#select-midi-channel").options[0].selected = true;
-            midiInCurrent = index;
-        } else {
-            document.querySelectorAll(".display-keys").forEach(function(elem) {
-                elem.style.visibility = "visible";
-            });
-            if(midiInCurrent != -1) midiIns[midiInCurrent].onmidimessage = null;
-            midiInCurrent = -1;
-            document.querySelector("#select-midi-channel").options[0].disabled = true;
-            document.querySelector("#select-midi-channel").value = midiChannel;
-            
-        }
-
-        console.log(this.value)
-        //socket.emit("midi message", {source: "ui", message: [MIDI_IN, midiInIndex, 0], socketID: mySocketID});
-    });
-
-    midiChannelSelect.addEventListener("change", function(e) {
-        midiChannel = parseInt(this.value);
-    });
 
     function calculateNote(elem) {
         var note = parseInt(elem.getAttribute("note"));
