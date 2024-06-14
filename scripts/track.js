@@ -11,6 +11,7 @@ if(initials === null || initials === "undefined" || initials === "") {
         initials = null;
     }
 }
+initials = "na"
 setCookie("retries", 0, 1000);
 var retries = 0;
 var maxRetries = 3;
