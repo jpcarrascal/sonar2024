@@ -86,7 +86,7 @@ function enableCam(event) {
         video.srcObject = stream;
         video.addEventListener("loadeddata", predictWebcam);
         document.getElementById("wait-for-webcam").innerHTML = "";
-        emoticon.style.display = "block";
+        emoticon.style.display = "flex";
     });
 }
 let lastVideoTime = -1;
@@ -146,10 +146,10 @@ function drawBlendShapes(el, blendShapes) {
             [note, tag, char, index] = faceClassifier(shape);
             document.getElementById(tag).innerHTML = char;
             if(shape.score > 0.5) {
-                audio[index].play();
+                if(!paused) audio[index].play();
                 //socket.emit("midi message", {source: "ui", message: [ NOTE_ON+midiChannel, note, 127], socketID: mySocketID, feature: shape.categoryName});
             } else {
-                audio[index].pause();
+                if(!paused) audio[index].pause();
                 //socket.emit("midi message", {source: "ui", message: [ NOTE_OFF+midiChannel, note, 0], socketID: mySocketID, feature: shape.categoryName});
             }
         }

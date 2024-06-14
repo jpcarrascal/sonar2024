@@ -76,22 +76,30 @@ button {
 
 #emoticon {
   display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: 2em;
-  height: 1em;
+  border: .2em solid;
+  width: 4em;
+  height: 4em;
+  border-radius: 2em;
 }
 
 #left-eye {
   text-align: left;
-  font-size: 2em;
+  font-size: 3em;
   height: 1em;
 }
 
 #right-eye {
   text-align: right;
-  font-size: 2em;
+  font-size: 3em;
+  height: 1em;
 }
 
 #mouth {
+  font-size: 1em;
   transform: rotate(90deg);
 }
 
@@ -100,7 +108,8 @@ button {
 }
 
 #controller {
-    width: 100vw;
+    width: 100%;
+    height: 100%;
     flex-direction: column;
     align-items: center;
 }

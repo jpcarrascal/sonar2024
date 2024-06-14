@@ -15,6 +15,7 @@ initials = "na"
 setCookie("retries", 0, 1000);
 var retries = 0;
 var maxRetries = 3;
+var paused = true;
 
 
 /* ------------- Sound stuff -------------*/
@@ -63,6 +64,7 @@ if(!initials && session) { // No initials == no socket connection
             console.log("My color is: " + msg.colors[0]);
             document.querySelector("body").style.backgroundColor = msg.colors[0];
             document.querySelector("body").style.color = msg.colors[1];
+            document.querySelector("#emoticon").style.borderColor = msg.colors[1];
         }
     });
 
@@ -104,11 +106,13 @@ if(!initials && session) { // No initials == no socket connection
     socket.on('veil-on', function(msg) {
         console.log("Veil ON " + msg.socketID);
         document.getElementById("veil").style.display = "flex";
+        paused = true;
     });
 
     socket.on('veil-off', function(msg) {
         console.log("Veil OFF " + msg.socketID);
         document.getElementById("veil").style.display = "none";
+        paused = false;
     });
 
     /* ----------- UI handlers ------------ */
