@@ -95,6 +95,10 @@ button {
   transform: rotate(90deg);
 }
 
+.audio-player {
+    display: none;
+}
+
 #controller {
     width: 100vw;
     flex-direction: column;

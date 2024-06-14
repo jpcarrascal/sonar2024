@@ -44,7 +44,7 @@
           </table>
       </div>
 
-        <p id="instructions">Click <b>enable webcam</b> below and grant access to the webcam if prompted.</p>
+        <p id="instructions">Please turn the volume up, <br/> click the button below<br/> and grant access to the webcam if prompted.</p>
 
         <div id="liveView" class="videoView">
           <span id="wait-for-webcam"></span><br />
@@ -62,8 +62,25 @@
         </div>
 
     </div>
-
+    <audio autoplay id="audio-player1" class="audio-player" src="" type="audio/mpeg" preload="auto" loop>
+      <p>
+        Your browser does not support HTML audio.
+      </p>
+    </audio>
     
+    <audio autoplay id="audio-player2" class="audio-player" src="" type="audio/mpeg" preload="auto" loop>
+      <p>
+        Your browser does not support HTML audio.
+      </p>
+    </audio>
+
+    <audio autoplay id="audio-player3" class="audio-player" src="" type="audio/mpeg" preload="auto" loop>
+      <p>
+        Your browser does not support HTML audio.
+      </p>
+    </audio>
+
+
     <script src="scripts/NoSleep.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="scripts/config.js"></script>

@@ -15,6 +15,17 @@ setCookie("retries", 0, 1000);
 var retries = 0;
 var maxRetries = 3;
 
+
+/* ------------- Sound stuff -------------*/
+
+var sounds = [];
+var audio = [document.getElementById("audio-player1"), document.getElementById("audio-player2"), document.getElementById("audio-player3")];
+var baseURL = "https://sonar2024.azurewebsites.net/sounds/";
+var host = window.location.host;
+if(host.includes("localhost")) baseURL = "http://localhost:3000/sounds/";
+var soundLocation = [null, null ,null];
+
+
 if(!initials && session) { // No initials == no socket connection
     document.getElementById("initials-form").style.display = "block";
     document.getElementById("veil").style.display = "none";
@@ -54,6 +65,15 @@ if(!initials && session) { // No initials == no socket connection
         }
     });
 
+    socket.on('sound-list', function(msg) {
+        sounds = msg.list;
+        for(var i = 0; i < 3; i++) {
+            soundLocation[i] = baseURL + sounds[Math.floor(Math.random() * sounds.length)];
+            audio[i].setAttribute("src", soundLocation[i]);
+            audio[i].pause();
+            console.log(audio[i].getAttribute("src"));
+        }
+    });
 
     socket.on('stop', function(msg) {
         console.log("Remote stop! " + msg.socketID);

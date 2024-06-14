@@ -141,13 +141,16 @@ function drawBlendShapes(el, blendShapes) {
         var note;
         var tag;
         var char;
+        var index;
         if (shape.categoryName === "eyeBlinkLeft" || shape.categoryName === "eyeBlinkRight" || shape.categoryName === "jawOpen") {
-            [note, tag, char] = faceClassifier(shape);
+            [note, tag, char, index] = faceClassifier(shape);
             document.getElementById(tag).innerHTML = char;
             if(shape.score > 0.5) {
-                socket.emit("midi message", {source: "ui", message: [ NOTE_ON+midiChannel, note, 127], socketID: mySocketID, feature: shape.categoryName});
+                audio[index].play();
+                //socket.emit("midi message", {source: "ui", message: [ NOTE_ON+midiChannel, note, 127], socketID: mySocketID, feature: shape.categoryName});
             } else {
-                socket.emit("midi message", {source: "ui", message: [ NOTE_OFF+midiChannel, note, 0], socketID: mySocketID, feature: shape.categoryName});
+                audio[index].pause();
+                //socket.emit("midi message", {source: "ui", message: [ NOTE_OFF+midiChannel, note, 0], socketID: mySocketID, feature: shape.categoryName});
             }
         }
     });
@@ -159,24 +162,27 @@ function faceClassifier(shape) {
     var note;
     var tag;
     var char;
+    var index;
     switch (shape.categoryName) {
         case "eyeBlinkLeft":
             note = 60;
             tag = "left-eye";
             char = (shape.score > 0.5)?"-":"·";
+            index = 0;
             break;
         case "eyeBlinkRight":
             note = 61;
             tag = "right-eye";
             char = (shape.score > 0.5)?"-":"·";
+            index = 1;
             break;
         case "jawOpen":
             note = 62;
             tag = "mouth"
             char = (shape.score > 0.5)?"D":")";
+            index = 2;
             break;
     }
-    var result = [note, tag, char];
-    console.log(result);
+    var result = [note, tag, char, index];
     return result;
 }
