@@ -9,6 +9,8 @@ var maxRetries = 3;
 var paused = true;
 
 
+
+
 /* ------------- Sound stuff -------------*/
 
 var sounds = [];
@@ -17,7 +19,29 @@ var baseURL = "https://sonar2024.azurewebsites.net/sounds/";
 var host = window.location.host;
 if(host.includes("localhost")) baseURL = "http://localhost:3000/sounds/";
 var soundLocation = [null, null ,null];
-
+for(var i = 0; i < 3; i++) {
+    audio[i].loop = false;
+    audio[i].addEventListener("ended", function() {
+        this.currentTime = 0;
+        this.pause();
+    });
+}
+/*
+let maxLoops = 3;
+for(var i = 0; i < 3; i++) {
+    audio[i].loops = 0;
+    audio[i].lastTime = 0;
+    audio[i].addEventListener('seeked', (e) => {
+        if (e.target.currentTime < e.target.lastTime) {
+            e.target.loops++;
+        }
+        console.log("seeked");
+        if (e.target.loops >= maxLoops) {
+            e.target.pause();
+        }
+        e.target.lastTime = e.target.currentTime;
+    });
+}*/
 
 if(!initials && session) { // No initials == no socket connection
     document.getElementById("initials-form").style.display = "block";

@@ -81,16 +81,7 @@ socket.on('midi message', function(msg) {
   if(channel != -1) {
     msg.message = replaceMidiChannel(msg.message, channel);
   }
-  if(port == -1) {
-    if(channel <= 15) {
-      out = synth;
-    } else {
-      out = synth2;
-      channel = channel - 16;
-    }
-  } else {
-    out = midiOuts[port];
-  }
+  out = midiOuts[port];
   var initialsTd = document.getElementById("initials-"+msg.socketID);
   out.send(msg.message);
   debugMidiMessage(msg.message);
@@ -159,12 +150,8 @@ function updateTracks() {
       panicButton.addEventListener("click", function(event){
         var channel = parseInt(tracks.find(function(value, index, arr){ return value.socketID == track.socketID;}).channel);
         var port = tracks.find(function(value, index, arr){ return value.socketID == track.socketID;}).midiOut;
-        if(port == -1) {
-          console.log("Panic to synth " + track.socketID);
-          synth.send([CC_CHANGE + channel, 123, 127]);
-        } else {
-          midiOuts[port].send([CC_CHANGE + channel, 123, 127]);
-        }
+        console.log("Panic to synth " + track.socketID);
+        if(port != -1) midiOuts[port].send([CC_CHANGE + channel, 123, 127]);
         flashElement(this, "red");
       });
       newCell.appendChild(panicButton);
