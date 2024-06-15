@@ -452,7 +452,7 @@ button.controls:hover {
     /* flex-grow, flex-shrink and flex-basis */
     flex-grow: 1;
     flex-basis: 11%;
-
+    font-size: 5em;
     border: 0;
     display: flex;
     justify-content: center;

@@ -2,7 +2,7 @@ var initials = findGetParameter("initials");
 var session = findGetParameter("session");
 var midiChannel = -1;
 if(session === "undefined") session = null;
-initials = "na"
+initials = "☺"
 setCookie("retries", 0, 1000);
 var retries = 0;
 var maxRetries = 3;

@@ -46,6 +46,7 @@ gridSwitch.addEventListener("click", function(event) {
   document.getElementById("container").classList.toggle("display-none");
 });
 
+gridSwitch.click();
 
 // Am I a sequencer?
 var isSeq = location.pathname.includes("sequencer");
