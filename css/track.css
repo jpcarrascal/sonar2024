@@ -81,16 +81,21 @@ button {
   text-align: center;
 }
 
+#face-contour {
+  border: .5em solid;
+  width: 13em;
+  height: 13em;
+  border-radius: 7em;
+}
+
 #emoticon {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 2em;
-  border: .2em solid;
   width: 6em;
   height: 6em;
-  border-radius: 3em;
   padding-top: .7em;
   overflow: visible;
 }
@@ -101,7 +106,7 @@ button {
   align-items: center;
   justify-content:space-between;
   height: 2em;
-  width: 3em;
+  width: 4em;
   overflow: visible;
 }
 
