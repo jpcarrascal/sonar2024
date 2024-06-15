@@ -78,19 +78,20 @@ socket.on('track joined', function(msg) {
 });
 
 socket.on('midi message', function(msg) {
-  var port = tracks[tracks.findBysocketId(msg.socketID)].midiOut;
+  //var port = tracks[tracks.findBysocketId(msg.socketID)].midiOut;
   var channel = parseInt(tracks[tracks.findBysocketId(msg.socketID)].channel);
   if(channel != -1) {
     msg.message = replaceMidiChannel(msg.message, channel);
   }
-  out = midiOuts[port];
+  //out = midiOuts[port];
   var initialsTd = document.getElementById("initials-"+msg.socketID);
-  out.send(msg.message);
-  debugMidiMessage(msg.message);
-  if( (msg.message[0] & 0xF0) == P_CHANGE ) {
-    var dropDown = document.getElementById("prog-"+msg.socketID);
-    dropDown.selectedIndex = msg.message[1];
-  };
+  //out.send(msg.message);
+  //debugMidiMessage(msg.message);
+  //if( (msg.message[0] & 0xF0) == P_CHANGE ) {
+  //  var dropDown = document.getElementById("prog-"+msg.socketID);
+  //  dropDown.selectedIndex = msg.message[1];
+  //};
+  console.log(initialsTd.innerText + " MIDI: " + msg.message);
   flashElement(initialsTd, "lime");
 });
 
