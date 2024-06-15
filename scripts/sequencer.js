@@ -13,7 +13,7 @@ var infoShown = false;
 
 var pauseButton = document.getElementById("pause-button");
 var playButton = document.getElementById("play-button");
-var infoSwitch = document.getElementById("info-switch")
+var infoSwitch = document.getElementById("info-switch");
 var panicAll = document.getElementById("panic-all");
 var gridSwitch = document.getElementById("grid-switch");
 
@@ -37,6 +37,7 @@ infoSwitch.addEventListener("click", function(event){
   infoShown = !infoShown;
 });
 
+document.getElementById("info-switch").click();
 
 gridSwitch.addEventListener("click", function(event) {
   document.getElementById("grid-container").classList.toggle("display-flex");

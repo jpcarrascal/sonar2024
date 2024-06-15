@@ -1,6 +1,9 @@
 
 html{
-
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
@@ -9,8 +12,7 @@ body {
     color: #EEE;
     background-color: black;
     overflow: hidden;
-    font-family: 'Montserrat', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -53,7 +55,6 @@ body {
     border: 0;
     display: none;
     text-align: center;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -91,6 +92,7 @@ button {
   height: 6em;
   border-radius: 3em;
   padding-top: .7em;
+  overflow: visible;
 }
 
 #eyes-row {
@@ -100,21 +102,24 @@ button {
   justify-content:space-between;
   height: 2em;
   width: 3em;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .face-cell {
-  overflow: hidden;
+  overflow: visible;
+  width: 3em;
 }
 
 #left-eye {
+  margin-left: auto;
   text-align: left;
-  font-size: 4em;
+  font-size: 3em;
 }
 
 #right-eye {
+  margin-right: auto;
   text-align: right;
-  font-size: 4em;
+  font-size: 3em;
 }
 
 #mouth {
