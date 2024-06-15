@@ -1,15 +1,6 @@
 
 html{
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+
 }
 
 body {
@@ -26,6 +17,13 @@ body {
     justify-content: center;
     touch-action: manipulation;
     font-size: 2em;
+
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
 }
 
 
@@ -74,32 +72,53 @@ button {
   font-size: 1em;
 }
 
-#emoticon {
+#camera-ready {
   display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#emoticon {
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 2em;
   border: .2em solid;
-  width: 4em;
-  height: 4em;
-  border-radius: 2em;
+  width: 6em;
+  height: 6em;
+  border-radius: 3em;
+  padding-top: .7em;
+}
+
+#eyes-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:space-between;
+  height: 2em;
+  width: 3em;
+  overflow: hidden;
+}
+
+.face-cell {
+  overflow: hidden;
 }
 
 #left-eye {
   text-align: left;
-  font-size: 3em;
-  height: 1em;
+  font-size: 4em;
 }
 
 #right-eye {
   text-align: right;
-  font-size: 3em;
-  height: 1em;
+  font-size: 4em;
 }
 
 #mouth {
-  font-size: 1em;
+  font-size: 2em;
   transform: rotate(90deg);
 }
 

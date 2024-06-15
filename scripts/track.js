@@ -2,15 +2,6 @@ var initials = findGetParameter("initials");
 var session = findGetParameter("session");
 var midiChannel = -1;
 if(session === "undefined") session = null;
-if(initials === null || initials === "undefined" || initials === "") {
-    if(getCookie("countmein-initials")) {
-        initials = getCookie("countmein-initials");
-        console.log("Initials from cookie: " + getCookie("countmein-initials"));
-    } else {
-        console.log("No cookie for you");
-        initials = null;
-    }
-}
 initials = "na"
 setCookie("retries", 0, 1000);
 var retries = 0;
@@ -64,6 +55,8 @@ if(!initials && session) { // No initials == no socket connection
             console.log("My color is: " + msg.colors[0]);
             document.querySelector("body").style.backgroundColor = msg.colors[0];
             document.querySelector("body").style.color = msg.colors[1];
+            document.querySelector("#veil").style.backgroundColor = msg.colors[0];
+            document.querySelector("#veil").style.color = msg.colors[1];
             document.querySelector("#emoticon").style.borderColor = msg.colors[1];
         }
     });
@@ -100,6 +93,9 @@ if(!initials && session) { // No initials == no socket connection
             console.log("Max retries reached. Exiting.");
             document.location.href = "/track?exitreason=" + msg.reason;
         }
+        for(var i = 0; i < 3; i++) {
+            audio[i].pause();
+        }
     });
 
     // Veil for preventing people from joining earlier than intended.
@@ -107,6 +103,9 @@ if(!initials && session) { // No initials == no socket connection
         console.log("Veil ON " + msg.socketID);
         document.getElementById("veil").style.display = "flex";
         paused = true;
+        for(var i = 0; i < 3; i++) {
+            audio[i].pause();
+        }
     });
 
     socket.on('veil-off', function(msg) {

@@ -23,7 +23,7 @@
     </div>
 
     <div id="initials-form" class="full-screen">
-      Escribe tus nombre o iniciales (10 letras máximo):
+      Type your initials (max 3 characters):
       <form>
         <input type="text" id="initials" name="initials" maxlength="10" placeholder="">
         <input type="submit" value="Enviar">
@@ -32,34 +32,43 @@
 
     <div id="controller" class="full-screen">
 
-      <div id="emoticon">
-        <table>
-          <tr>
-            <td id="left-eye">·</td>
-            <td id="right-eye">·</td>
-          </tr>
-            <tr>
-              <td colspan="2" id="mouth">)</td>
-          </tr>
-        </table>
+      <div id="camera-ready">
+        <div id="emoticon">
+            <div id="eyes-row">
+              <div class="face-cell">
+                <span id="left-eye">•</span>
+              </div>
+              <div class="face-cell">
+                <span id="right-eye">•</span>
+              </div>
+            </div>
+            <div id="mouth" class="face-cell">)</div>
+        </div>
+        <div>
+          <br />
+          Open your mouth...<br />
+          close your eyes...<br />
+          and listen to the machine
+        </div>
       </div>
 
-        <p id="instructions">Please turn the volume up, <br/> click the button below<br/> and grant access to the webcam if prompted.</p>
+      <div id="instructions">Please turn the volume up, <br/> click the button below<br/> and grant access to the webcam if prompted.
+      </div>
 
-        <div id="liveView" class="videoView">
-          <span id="wait-for-webcam"></span><br />
-          <button id="webcamButton" class="mdc-button mdc-button--raised">
-            <span class="mdc-button__ripple"></span>
-            <span class="mdc-button__label button">ENABLE WEBCAM</span>
-          </button>
-          <div style="position: relative;" id="video-container">
-            <video id="webcam" style="position: abso" autoplay playsinline></video>
-            <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
-          </div>
+      <div id="liveView" class="videoView">
+        <span id="wait-for-webcam"></span><br />
+        <button id="webcamButton" class="mdc-button mdc-button--raised">
+          <span class="mdc-button__ripple"></span>
+          <span class="mdc-button__label button">ENABLE WEBCAM</span>
+        </button>
+        <div style="position: relative;" id="video-container">
+          <video id="webcam" style="position: abso" autoplay playsinline></video>
+          <canvas class="output_canvas" id="output_canvas" style="position: absolute; left: 0px; top: 0px;"></canvas>
         </div>
-        <div class="blend-shapes">
-          <ul class="blend-shapes-list" id="video-blend-shapes"></ul>
-        </div>
+      </div>
+      <div class="blend-shapes">
+        <ul class="blend-shapes-list" id="video-blend-shapes"></ul>
+      </div>
 
     </div>
     <audio autoplay id="audio-player1" class="audio-player" src="" type="audio/mpeg" preload="auto" loop>

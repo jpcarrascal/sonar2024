@@ -13,7 +13,7 @@ const { FaceLandmarker, FilesetResolver, DrawingUtils } = vision;
 const demosSection = document.getElementById("demos");
 const imageBlendShapes = document.getElementById("image-blend-shapes");
 const videoBlendShapes = document.getElementById("video-blend-shapes");
-const emoticon = document.getElementById("emoticon");
+const cameraReady = document.getElementById("camera-ready");
 let faceLandmarker;
 let runningMode = "IMAGE";
 let enableWebcamButton, waitMessage, instructions;
@@ -86,7 +86,7 @@ function enableCam(event) {
         video.srcObject = stream;
         video.addEventListener("loadeddata", predictWebcam);
         document.getElementById("wait-for-webcam").innerHTML = "";
-        emoticon.style.display = "flex";
+        cameraReady.style.display = "flex";
     });
 }
 let lastVideoTime = -1;
@@ -167,13 +167,13 @@ function faceClassifier(shape) {
         case "eyeBlinkLeft":
             note = 60;
             tag = "left-eye";
-            char = (shape.score > 0.5)?"-":"·";
+            char = (shape.score > 0.5)?"-":"•";
             index = 0;
             break;
         case "eyeBlinkRight":
             note = 61;
             tag = "right-eye";
-            char = (shape.score > 0.5)?"-":"·";
+            char = (shape.score > 0.5)?"-":"•";
             index = 1;
             break;
         case "jawOpen":

@@ -11,9 +11,6 @@ tracks.findBysocketId = function(sid) {
 var trackList = document.getElementById("track-list-body");
 var infoShown = false;
 
-var synth = new WebAudioTinySynth({quality:1, useReverb:0, debug:0});
-var synth2 = new WebAudioTinySynth({quality:1, useReverb:0, debug:0});
-
 var pauseButton = document.getElementById("pause-button");
 var playButton = document.getElementById("play-button");
 var infoSwitch = document.getElementById("info-switch")
@@ -133,44 +130,13 @@ function updateTracks() {
       midiOutSelector.selectedIndex = 0;
       track.midiOut = midiOutSelector.value;
 
-      var synthDropdown = document.createElement("select");
-      synthDropdown.id = "prog-" + track.socketID;
-      synthDropdown.setAttribute("synthId", track.socketID);
-      synthDropdown.setAttribute("channel", index);
 
       midiOutSelector.addEventListener("change", function(event){
         track.midiOut = this.value;
-        if(this.value == "-1") {
-          /// ***
-          function pg(event) { 
-            prog(this.getAttribute("channel"), this.selectedIndex);
-          }
-          synthDropdown.addEventListener("change", pg);
-          synthDropdown.style.visibility = "visible";
-          updateProgramList(synth, synthDropdown)
-        } else {
-          synthDropdown.style.visibility = "hidden";
-          synthDropdown.removeEventListener("change", pg);
-        }
-        /// ***
       });
-
-      if(midiOutSelector.value == "-1") {
-        /// ***
-        function pg(event) { 
-          prog(this.getAttribute("channel"), this.selectedIndex);
-        }
-        synthDropdown.addEventListener("change", pg);
-        synthDropdown.style.visibility = "visible";
-        updateProgramList(synth, synthDropdown)
-      } else {
-        synthDropdown.style.visibility = "hidden";
-        synthDropdown.removeEventListener("change", pg);
-      }
       /// ***
       newCell = document.createElement("td");
       newCell.appendChild(midiOutSelector);
-      newCell.appendChild(synthDropdown);
       newRow.appendChild(newCell);
 
       // -------- MIDI Channel selector:
@@ -265,14 +231,7 @@ function prog(ch, pg){
   synth.send(msg);
 }
 
-async function updateProgramList(synth, dropdownElem){
-  await synth.ready();
-  for(var i=0;i<128;++i){
-    var o = document.createElement("option");
-    o.innerHTML = (i+1)+" : "+synth.getTimbreName(0,i);
-    dropdownElem.appendChild(o);
-  }
-}
+
 
 function allocateTrack(trackInfo) {
   var trackIndex = tracks.indexOf(null);
