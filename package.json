@@ -1,11 +1,20 @@
 {
-    "name": "MIDI Socket",
-    "version": "0.0.1",
-    "description": "Collaborative Step Sequencer",
+    "name": "sonar2024",
+    "version": "0.0.2",
+    "description": "Collaborative Step Sequencer (Sonar 2024)",
+    "engines": {
+        "node": ">=24"
+    },
+    "scripts": {
+        "start": "node index.js",
+        "test": "jest"
+    },
     "dependencies": {
-        "cookie": "^0.4.2",
-        "express": "^4.17.1",
-        "socket.io": "^4.4.0",
-        "winston": "^3.5.0"
+        "beatlink-core": "github:jpcarrascal/beatlink-core#main",
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "socket.io-client": "^4.8.1"
     }
 }

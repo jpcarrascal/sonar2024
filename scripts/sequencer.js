@@ -53,14 +53,14 @@ var isSeq = location.pathname.includes("sequencer");
 var initials = "";
 var session = findGetParameter("session") || DEFAULT_SESSION;
 
-var socket = io("", {query:{code: code, session:session}});
+var socket = io("", {query:{code: code, session:session, role: "host"}});
 var mySocketID;
 socket.on("connect", () => {
   console.log("Connected, my socketID:" + socket.id);
   mySocketID = socket.id;
 });
 
-socket.on('sequencer exists', function(msg) {
+socket.on('host-exists', function(msg) {
   document.location.href = "/?exitreason=" + msg.reason;
 });
 
@@ -190,14 +190,14 @@ pauseButton.addEventListener("click",function(event){
   this.classList.add("paused");
   playButton.classList.remove("playing");
   console.log("Veil ON, paused");
-  socket.emit('session pause', { socketID: mySocketID });
+  socket.emit('session-pause', { socketID: mySocketID });
 });
 
 playButton.addEventListener("click",function(event){
   pauseButton.classList.remove("paused");
   this.classList.add("playing");
   console.log("Veil OFF, session started");
-  socket.emit('session play', { socketID: mySocketID });
+  socket.emit('session-play', { socketID: mySocketID });
 });
 
 panicAll.addEventListener("click",function(event){

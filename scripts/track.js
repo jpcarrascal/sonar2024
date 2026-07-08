@@ -60,7 +60,7 @@ if(!initials && session) { // No initials == no socket connection
     /* ----------- Socket set up: ------------ */
     document.getElementById("controller").style.display = "flex";
     var mySocketID;
-    var socket = io("", {query:{initials: initials, session: session}});
+    var socket = io("", {query:{initials: initials, session: session, role: "participant"}});
     socket.on("connect", () => {
         setCookie("retries", 0, 1000); retries = 0;
         console.log("Connected, my socketID:" + socket.id);
@@ -103,7 +103,7 @@ if(!initials && session) { // No initials == no socket connection
         console.log("Remote play! " + msg.socketID);
     });
 
-    socket.on('exit session', function(msg) {
+    function onSessionGone(msg) {
         if(retries < maxRetries) {
             console.log("Retrying...");
             retries = parseInt(getCookie("retries")) + 1;
@@ -120,7 +120,10 @@ if(!initials && session) { // No initials == no socket connection
         for(var i = 0; i < 3; i++) {
             audio[i].pause();
         }
-    });
+    }
+    socket.on('exit session', onSessionGone);
+    socket.on('session-unavailable', onSessionGone);
+    socket.on('session-ended', onSessionGone);
 
     // Veil for preventing people from joining earlier than intended.
     socket.on('veil-on', function(msg) {
